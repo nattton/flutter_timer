@@ -33,7 +33,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     _tickerSubscription?.cancel();
     _tickerSubscription = ticker
         .tick(ticks: event.duration)
-        .listen((duration) => add(_Ticked(duration)));
+        .listen((duration) => add(_Ticked(duration: duration)));
   }
 
   FutureOr<void> _onPaused(Paused event, Emitter<TimerState> emit) {

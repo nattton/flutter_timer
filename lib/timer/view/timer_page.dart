@@ -20,11 +20,8 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Timer'),
-      ),
-      body: const Stack(
+    return const Scaffold(
+      body: Stack(
         children: [
           Background(),
           Column(
@@ -74,6 +71,8 @@ class Actions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TimerBloc, TimerState>(
+      buildWhen: (previous, current) =>
+          previous.runtimeType != current.runtimeType,
       builder: (context, state) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -81,8 +80,9 @@ class Actions extends StatelessWidget {
               initial: (duration) => [
                     FloatingActionButton(
                       child: const Icon(Icons.play_arrow),
-                      onPressed: () =>
-                          context.read<TimerBloc>().add(Started(duration)),
+                      onPressed: () => context
+                          .read<TimerBloc>()
+                          .add(Started(duration: duration)),
                     ),
                   ],
               runInProgress: (duration) => [
